@@ -38,3 +38,12 @@ generally sampled at random from pairs of nodes that are not positively labeled 
 that the majority of non-labelled pairs are negative.
 
 * `SliNetwork <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/SliNetwork.ipynb>`_: Characterization of the Synthetic Lethality Interation (SLI) network.
+
+
+Classification by Node Degree
+#############################
+
+In this experiment, we show that it is possible to obtain respectable classification performance by using solely 
+the degree of both nodes of an edge as features.
+
+* `degreeBias <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/degreeBias.ipynb>`_: Classification of the SLI network based on node degree.
