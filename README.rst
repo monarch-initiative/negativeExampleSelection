@@ -60,3 +60,14 @@ Running classification with node-based and edge-based sampling for 15 classifier
 We ran one analysis on a SLURM cluster that performed analysis with 15 different classifiers. We
 present the SLURM script we used as well as the python script in the ``scripts`` subdirectory.
 The results of analysis are used by XXX notebook below.
+
+
+
+
+Model parameters
+################
+
+The learning algorithms used for this analysis were implemented in GRAPE and the default parameters
+were used. The following script creates a table with these parameters for convenience.
+
+* `modelParameterTable <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/modelParameterTable.ipynb>`_: Extract and summarize parameters.
