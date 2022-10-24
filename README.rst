@@ -47,3 +47,16 @@ In this experiment, we show that it is possible to obtain respectable classifica
 the degree of both nodes of an edge as features.
 
 * `degreeBias <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/degreeBias.ipynb>`_: Classification of the SLI network based on node degree.
+
+
+
+
+
+
+
+Running classification with node-based and edge-based sampling for 15 classifiers
+#################################################################################
+
+We ran one analysis on a SLURM cluster that performed analysis with 15 different classifiers. We
+present the SLURM script we used as well as the python script in the ``scripts`` subdirectory.
+The results of analysis are used by XXX notebook below.
