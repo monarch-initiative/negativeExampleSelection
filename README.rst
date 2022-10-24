@@ -35,8 +35,5 @@ edges, i.e., pairs of nodes that were demonstrated not to have a specific relati
 generally sampled at random from pairs of nodes that are not positively labeled under the assumption
 that the majority of non-labelled pairs are negative.
 
+* `SliNetwork <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/SliNetwork.ipynb>`_: Characterization of the Synthetic Lethality Interation (SLI) network.
 
-
-
-negativeExampleSelection
-Demonstration of bias in graph machine learning owing to negative example selection
