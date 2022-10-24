@@ -18,7 +18,9 @@ A minimum of Python version 3.7 is required. The easiest way to run the notebook
 
     python3 -m venv venv
     source venv/bin/activate
-    pip install pandas numpy grape barplots
+    pip install pandas numpy grape barplots 
+    pip install networkx # required for the SliNetwork notebook only
+    pip install powerlaw # required for the SliNetwork notebook only
     pip install jupyter
     python -m ipykernel install --user --name=venv
 
@@ -28,12 +30,14 @@ Following this, start jupyter or jupyter-notebook and run any of the notebooks i
 Biological networks
 ###################
 
-iomedical knowledge graphs include
+Biomedical knowledge graphs include
 edges representing various types of relations between biological entities such as protein-protein interac-
 tions, synthetic lethality, or shared biological functions. Because our knowledge about explicit negative
 edges, i.e., pairs of nodes that were demonstrated not to have a specific relation, negative examples are
 generally sampled at random from pairs of nodes that are not positively labeled under the assumption
 that the majority of non-labelled pairs are negative.
+
+
 
 
 
