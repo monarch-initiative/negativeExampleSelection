@@ -33,3 +33,5 @@ source ./venv/bin/activate
 for i in $(seq $SLURM_NNODES); do
     srun --ntasks=1 --nodes=1 --export=ALL,SLURM_GRAPE_ID="$i" --exclusive python3 runSli.py &
 done
+
+wait
