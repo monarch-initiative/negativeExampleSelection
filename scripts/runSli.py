@@ -47,16 +47,53 @@ TRAIN_SIZES = (0.75,)
 
 results = []
 
-for train_size in tqdm(
-    TRAIN_SIZES,
-    desc="Training sizes",
+fresults = []
+train_size = 0.75
+for validation_use_scale_free in tqdm(
+    (True, False),
+    desc="Validation use scale free",
     leave=False
-):
-    for validation_use_scale_free in tqdm(
-        (True, False),
-        desc="Validation use scale free",
+    ):
+    results.append(edge_prediction_evaluation(
+        smoke_test=SMOKE_TEST,
+        holdouts_kwargs=dict(
+            train_size=train_size,
+            edge_types=["SLI"],
+        ),
+        evaluation_schema="Connected Monte Carlo",
+        graphs=composite_graph,
+        models=[
+            PerceptronEdgePrediction(
+                edge_features=edge_feature,
+                number_of_edges_per_mini_batch=32,
+                use_scale_free_distribution=use_scale_free_distribution
+            )
+            for edge_feature in (
+                "Degree", "AdamicAdar",
+                "JaccardCoefficient", "ResourceAllocationIndex",
+                "PreferentialAttachment"
+            )
+            for use_scale_free_distribution in (True, False)
+        ],
+        number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
+        enable_cache=True,
+        number_of_holdouts=NUMBER_OF_HOLDOUTS,
+        use_scale_free_distribution=validation_use_scale_free,
+        validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
+        subgraph_of_interest=subgraph,
+        use_subgraph_as_support=True
+    ))
+    for ModelClass in tqdm(
+        [
+            FirstOrderLINEEnsmallen, SecondOrderLINEEnsmallen,
+            DeepWalkGloVeEnsmallen, DeepWalkCBOWEnsmallen, DeepWalkSkipGramEnsmallen,
+            WalkletsGloVeEnsmallen, WalkletsCBOWEnsmallen, WalkletsSkipGramEnsmallen,
+            HOPEEnsmallen,
+        ],
+        desc="Embedding",
         leave=False
     ):
+        # Do not use scale free for the embedding method, even if it is possible
         results.append(edge_prediction_evaluation(
             smoke_test=SMOKE_TEST,
             holdouts_kwargs=dict(
@@ -64,79 +101,25 @@ for train_size in tqdm(
                 edge_types=["SLI"],
             ),
             evaluation_schema="Connected Monte Carlo",
+            node_features=ModelClass(),
             graphs=composite_graph,
             models=[
                 PerceptronEdgePrediction(
-                    edge_features=edge_feature,
+                    edge_features=None,
+                    edge_embeddings="Hadamard",
                     number_of_edges_per_mini_batch=32,
                     use_scale_free_distribution=use_scale_free_distribution
                 )
-                for edge_feature in (
-                    "Degree", "AdamicAdar",
-                    "JaccardCoefficient", "ResourceAllocationIndex",
-                    "PreferentialAttachment"
-                )
                 for use_scale_free_distribution in (True, False)
             ],
-            number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
             enable_cache=True,
             number_of_holdouts=NUMBER_OF_HOLDOUTS,
+            number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
             use_scale_free_distribution=validation_use_scale_free,
             validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
             subgraph_of_interest=subgraph,
             use_subgraph_as_support=True
         ))
-        for ModelClass in tqdm(
-            [
-                FirstOrderLINEEnsmallen, SecondOrderLINEEnsmallen,
-                DeepWalkGloVeEnsmallen, DeepWalkCBOWEnsmallen, DeepWalkSkipGramEnsmallen,
-                WalkletsGloVeEnsmallen, WalkletsCBOWEnsmallen, WalkletsSkipGramEnsmallen,
-                HOPEEnsmallen,
-            ],
-            desc="Embedding",
-            leave=False
-        ):
-            # If the embedding method involves edge sampling, we train a run
-            # using the scale free and one using the uniform.
-            if "use_scale_free_distribution" in ModelClass().parameters():
-                parameter_sets = [
-                    dict(
-                        use_scale_free_distribution = True
-                    ),
-                    dict(
-                        use_scale_free_distribution = False
-                    )
-                ]
-            else:
-                parameter_sets = [dict()]
-
-            for parameter_set in parameter_sets:
-                results.append(edge_prediction_evaluation(
-                    smoke_test=SMOKE_TEST,
-                    holdouts_kwargs=dict(
-                        train_size=train_size,
-                        edge_types=["SLI"],
-                    ),
-                    evaluation_schema="Connected Monte Carlo",
-                    node_features=ModelClass(**parameter_set),
-                    graphs=composite_graph,
-                    models=[
-                        PerceptronEdgePrediction(
-                            edge_features=None,
-                            edge_embeddings="Hadamard",
-                            number_of_edges_per_mini_batch=32,
-                            use_scale_free_distribution=use_scale_free_distribution
-                        )
-                        for use_scale_free_distribution in (True, False)
-                    ],
-                    enable_cache=True,
-                    number_of_holdouts=NUMBER_OF_HOLDOUTS,
-		    number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
-                    use_scale_free_distribution=validation_use_scale_free,
-                    validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
-                    subgraph_of_interest=subgraph,
-                    use_subgraph_as_support=True
-                ))
 
 results = pd.concat(results)
-results.to_csv("sli_results-hadamard.tsv",sep="\t")
+results.to_csv("sli_results-hadamard-jul23.tsv",sep="\t")
