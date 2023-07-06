@@ -64,16 +64,10 @@ for validation_use_scale_free in tqdm(
         graphs=composite_graph,
         models=[
             PerceptronEdgePrediction(
-                edge_features=edge_feature,
+                edge_features="AdamicAdar",
                 number_of_edges_per_mini_batch=32,
-                use_scale_free_distribution=use_scale_free_distribution
+                use_scale_free_distribution=False
             )
-            for edge_feature in (
-                "Degree", "AdamicAdar",
-                "JaccardCoefficient", "ResourceAllocationIndex",
-                "PreferentialAttachment"
-            )
-            for use_scale_free_distribution in (True, False)
         ],
         number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
         enable_cache=True,
@@ -106,11 +100,10 @@ for validation_use_scale_free in tqdm(
             models=[
                 PerceptronEdgePrediction(
                     edge_features=None,
-                    edge_embeddings="Hadamard",
+                    edge_embeddings="AdamicAdar",
                     number_of_edges_per_mini_batch=32,
-                    use_scale_free_distribution=use_scale_free_distribution
+                    use_scale_free_distribution=False
                 )
-                for use_scale_free_distribution in (True, False)
             ],
             enable_cache=True,
             number_of_holdouts=NUMBER_OF_HOLDOUTS,
