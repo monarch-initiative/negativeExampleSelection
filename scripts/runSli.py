@@ -54,65 +54,43 @@ for validation_use_scale_free in tqdm(
     desc="Validation use scale free",
     leave=False
     ):
-    results.append(edge_prediction_evaluation(
-        smoke_test=SMOKE_TEST,
-        holdouts_kwargs=dict(
-            train_size=train_size,
-            edge_types=["SLI"],
-        ),
-        evaluation_schema="Connected Monte Carlo",
-        graphs=composite_graph,
-        models=[
-            PerceptronEdgePrediction(
-                edge_features="AdamicAdar",
-                number_of_edges_per_mini_batch=32,
-                use_scale_free_distribution=False
-            )
-        ],
-        number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
-        enable_cache=True,
-        number_of_holdouts=NUMBER_OF_HOLDOUTS,
-        use_scale_free_distribution=validation_use_scale_free,
-        validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
-        subgraph_of_interest=subgraph,
-        use_subgraph_as_support=True
-    ))
-    for ModelClass in tqdm(
-        [
-            FirstOrderLINEEnsmallen, SecondOrderLINEEnsmallen,
-            DeepWalkGloVeEnsmallen, DeepWalkCBOWEnsmallen, DeepWalkSkipGramEnsmallen,
-            WalkletsGloVeEnsmallen, WalkletsCBOWEnsmallen, WalkletsSkipGramEnsmallen,
-            HOPEEnsmallen,
-        ],
-        desc="Embedding",
-        leave=False
-    ):
-        # Do not use scale free for the embedding method, even if it is possible
-        results.append(edge_prediction_evaluation(
-            smoke_test=SMOKE_TEST,
-            holdouts_kwargs=dict(
-                train_size=train_size,
-                edge_types=["SLI"],
-            ),
-            evaluation_schema="Connected Monte Carlo",
-            node_features=ModelClass(),
-            graphs=composite_graph,
-            models=[
-                PerceptronEdgePrediction(
-                    edge_features=None,
-                    edge_embeddings="AdamicAdar",
-                    number_of_edges_per_mini_batch=32,
-                    use_scale_free_distribution=False
-                )
+    results.append(
+        for ModelClass in tqdm(
+            [
+                FirstOrderLINEEnsmallen, SecondOrderLINEEnsmallen,
+                DeepWalkGloVeEnsmallen, DeepWalkCBOWEnsmallen, DeepWalkSkipGramEnsmallen,
+                WalkletsGloVeEnsmallen, WalkletsCBOWEnsmallen, WalkletsSkipGramEnsmallen,
+                HOPEEnsmallen,
             ],
-            enable_cache=True,
-            number_of_holdouts=NUMBER_OF_HOLDOUTS,
-            number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
-            use_scale_free_distribution=validation_use_scale_free,
-            validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
-            subgraph_of_interest=subgraph,
-            use_subgraph_as_support=True
-        ))
+            desc="Embedding",
+            leave=False
+        ):
+            # Do not use scale free for the embedding method, even if it is possible
+            results.append(edge_prediction_evaluation(
+                smoke_test=SMOKE_TEST,
+                holdouts_kwargs=dict(
+                    train_size=train_size,
+                    edge_types=["SLI"],
+                ),
+                evaluation_schema="Connected Monte Carlo",
+                node_features=ModelClass(),
+                graphs=composite_graph,
+                models=[
+                    PerceptronEdgePrediction(
+                        edge_features=None,
+                        edge_embeddings="AdamicAdar",
+                        number_of_edges_per_mini_batch=32,
+                        use_scale_free_distribution=False
+                    )
+                ],
+                enable_cache=True,
+                number_of_holdouts=NUMBER_OF_HOLDOUTS,
+                number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
+                use_scale_free_distribution=validation_use_scale_free,
+                validation_unbalance_rates=VALIDATION_UNBALANCE_RATES,
+                subgraph_of_interest=subgraph,
+                use_subgraph_as_support=True
+            ))
 
 results = pd.concat(results)
 results.to_csv("sli_results-hadamard-jul23.tsv",sep="\t")
