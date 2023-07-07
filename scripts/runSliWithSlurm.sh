@@ -1,20 +1,20 @@
 #!/bin/bash
 
-#SBATCH --job-name=grape2
-#SBATCH --output=SLIoct13.out
+#SBATCH --job-name=grape_sli
+#SBATCH --output=grape_sli.out
 # The number of tasks per node should always be one, as we already parallize within the pipeline.
 #SBATCH --ntasks-per-node=1
 # The number of nodes, which should be <= number of holdouts
 # This is generally the same as `NUMBER_OF_SLURM_NODES` from the `run_pipeline.py` script
 # but may be much higher when you are running some other layer of parallelization, such
 # as when you are running a grid search.
-#SBATCH --nodes=10
+#SBATCH --nodes=1
 # RAM to be used, just set a reasonable amount for your task
 #SBATCH --mem=32GB
 # Computation time to be used, just set a reasonable amount for your task
 #SBATCH --time 24:00:00
 # Number of processing cores to be used per node, just set a reasonable amount for your task
-#SBATCH --cpus-per-task=24
+#SBATCH --cpus-per-task=12
 # We want to wait for the script to complete running.
 #SBATCH --wait
 
@@ -30,8 +30,7 @@
 source ./venv/bin/activate
 
 
-for i in $(seq $SLURM_NNODES); do
-    srun --ntasks=1 --nodes=1 --export=ALL,SLURM_GRAPE_ID="$i" --exclusive python3 runSli.py &
-done
+SLURM_NODES=10
 
+python3 runSli.py &
 wait
