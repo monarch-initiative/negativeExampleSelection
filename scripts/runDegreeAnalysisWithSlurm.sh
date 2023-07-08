@@ -31,5 +31,4 @@ source ./venv/bin/activate
 
 
 
-python3 sliNetworkAnalysis.py &
-
+python3 degreeOnlyAnalysis.py &
