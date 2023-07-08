@@ -93,4 +93,4 @@ for validation_use_scale_free in tqdm(
             ))
 
 results = pd.concat(results)
-results.to_csv("sli_results-hadamard-jul23.tsv",sep="\t")
+results.to_csv("sli_network_analysis.tsv",sep="\t")
