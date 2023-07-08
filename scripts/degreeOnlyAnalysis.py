@@ -64,10 +64,10 @@ for validation_use_scale_free in tqdm(
         graphs=composite_graph,
         models=[
             PerceptronEdgePrediction(
-                edge_features="AdamicAdar",
+                edge_features=edge_feature,
                 number_of_edges_per_mini_batch=32,
                 use_scale_free_distribution=False
-            )
+            ) for edge_feature in("Degree","AdamicAdar","JaccardCoefficient","ResourceAllocationIndex","PreferentialAttachment") 
         ],
         #number_of_slurm_nodes=NUMBER_OF_HOLDOUTS,
         enable_cache=True,
