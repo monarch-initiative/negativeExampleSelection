@@ -39,7 +39,7 @@ subgraph = composite_graph.filter_from_names(
 
 
 # Set smoke test to True for testing:
-SMOKE_TEST = True
+SMOKE_TEST = False
 NUMBER_OF_HOLDOUTS = 10
 VALIDATION_UNBALANCE_RATES = (1.0, )
 TRAIN_SIZES = (0.75,)
