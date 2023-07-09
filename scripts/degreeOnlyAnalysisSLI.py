@@ -64,8 +64,10 @@ for validation_use_scale_free in tqdm(
         graphs=composite_graph,
         models=[
             PerceptronEdgePrediction(
-                edge_features=edge_feature,
-                number_of_edges_per_mini_batch=32,
+               edge_features=edge_feature,
+                number_of_epochs=1000,
+                number_of_edges_per_mini_batch=16,
+                learning_rate=0.001,
                 use_scale_free_distribution=False
             ) for edge_feature in("Degree","AdamicAdar","JaccardCoefficient","ResourceAllocationIndex","PreferentialAttachment") 
         ],

@@ -31,5 +31,5 @@ source ./venv/bin/activate
 
 
 echo "Running degree analysis"
-python3 degreeOnlyAnalysis.py &
+python3 degreeOnlyAnalysis.pySLI &
 wait
