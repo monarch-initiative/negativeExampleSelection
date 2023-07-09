@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH --job-name=grape_sli
-#SBATCH --output=grape_sli.out
+#SBATCH --job-name=grape_degree_analysis
+#SBATCH --output=grape_degree_analysis_.out
 # The number of tasks per node should always be one, as we already parallize within the pipeline.
 #SBATCH --ntasks-per-node=1
 # The number of nodes, which should be <= number of holdouts
@@ -30,6 +30,6 @@
 source ./venv/bin/activate
 
 
-
-python3 sliNetworkAnalysis.py &
-
+echo "Running degree analysis"
+python3 degreeOnlyAnalysisSLI.py &
+wait
