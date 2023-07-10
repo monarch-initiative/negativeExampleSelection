@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH --job-name=grape_degree_analysis
-#SBATCH --output=grape_degree_analysis_.out
+#SBATCH --job-name=grape_degree_analysis_sli
+#SBATCH --output=grape_degree_analysis_sli_out
 # The number of tasks per node should always be one, as we already parallize within the pipeline.
 #SBATCH --ntasks-per-node=1
 # The number of nodes, which should be <= number of holdouts

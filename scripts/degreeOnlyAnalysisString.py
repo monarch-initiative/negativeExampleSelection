@@ -32,7 +32,7 @@ string_graph = string_graph \
 
 
 # Set smoke test to True for testing:
-SMOKE_TEST = True
+SMOKE_TEST = False
 NUMBER_OF_HOLDOUTS = 10
 VALIDATION_UNBALANCE_RATES = (1.0, )
 TRAIN_SIZES = (0.75,)
@@ -74,4 +74,4 @@ for validation_use_scale_free in tqdm(
         use_subgraph_as_support=True
     ))
 results = pd.concat(results)
-results.to_csv("degree_only_perceptron.tsv",sep="\t")
+results.to_csv("degree_only_perceptron_string.tsv",sep="\t")

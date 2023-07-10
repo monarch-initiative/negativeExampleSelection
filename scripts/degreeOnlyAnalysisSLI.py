@@ -80,4 +80,4 @@ for validation_use_scale_free in tqdm(
         use_subgraph_as_support=True
     ))
 results = pd.concat(results)
-results.to_csv("degree_only_perceptron.tsv",sep="\t")
+results.to_csv("degree_only_perceptron_sli.tsv",sep="\t")
