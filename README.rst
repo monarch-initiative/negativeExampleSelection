@@ -21,6 +21,7 @@ A minimum of Python version 3.7 is required. The easiest way to run the notebook
     pip install pandas numpy grape barplots 
     pip install networkx # required for the SliNetwork notebook only
     pip install powerlaw # required for the SliNetwork notebook only
+    pip install plotnine # required for some graphics
     pip install jupyter
     python -m ipykernel install --user --name=venv
 
