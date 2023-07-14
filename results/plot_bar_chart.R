@@ -27,16 +27,17 @@ summarise_df <- function(df) {
               mean.mcc=mean(matthews_correlation_coefficient), sd.mcc=sd(matthews_correlation_coefficient),
               mean.f1=mean(f1_score), sd.f1=sd(f1_score),
               mean.ba=mean(balanced_accuracy), sd.ba=sd(balanced_accuracy))
+  df_summary$evaluation <- paste0(df_summary$evaluation_negative_sampling_method, " (", df_summary$evaluation_mode, ")")
   return (df_summary)
 }
 
 
 plot_summary <- function (summary_df) {
   p <- summary_df %>%
-    ggplot( aes(x=features_names, y=mean.mcc, fill=evaluation_negative_sampling_method)) +
+    ggplot( aes(x=features_names, y=mean.mcc, fill=evaluation)) +
     geom_boxplot() +
-    scale_fill_viridis(discrete = TRUE, alpha=0.6) +
-   # geom_jitter(color="black", size=0.4, alpha=0.9) +
+    scale_fill_viridis(discrete = TRUE, alpha=0.75) +
+   # geom_jitter(color="black", size=0.2, alpha=0.9) +
     theme_ipsum() +
     theme(
       legend.position=c(0.1, 0.95),
@@ -44,18 +45,41 @@ plot_summary <- function (summary_df) {
       plot.title = element_text(size=11),
       axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
     ) +
-    ggtitle("A boxplot with jitter") +
+    xlab("")
+  return (p)
+}
+
+
+plot_summary_bars <- function (summary_df) {
+  df <- summary_df %>% as.data.frame()
+  p <- ggplot(df) +
+    geom_bar( aes(x=features_names, y=mean.mcc), stat="identity", fill="skyblue", alpha=0.7) +
+    geom_errorbar( aes(x=features_names, ymin=features_names-sd.mcc, ymax=features_names+sd.mcc),
+                   width=0.4, colour="orange", alpha=0.9, linewidth=1.3) +
+    #scale_fill_viridis(discrete = TRUE, alpha=0.75) 
+  #  theme_ipsum() +
+    theme(
+      legend.position=c(0.1, 0.95),
+      legend.title = element_blank(),
+      plot.title = element_text(size=11),
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+    ) +
     xlab("")
   return (p)
 }
 
 
 
+
+
+
+
 sli_df = prepare_dataset(sli_file_path)
 sli_summary <-summarise_df(sli_df)
-p <- plot_summary(sli_summary)
+p <- plot_summary_bars(sli_summary)
 p
 
+write.csv(sli_summary, "sli_summary.csv", row.names=FALSE)
 
 
 string_df = prepare_dataset(string_file_path)
@@ -63,6 +87,17 @@ string_summary <-summarise_df(string_df)
 p <- plot_summary(string_summary)
 p
 
-
-
+df <- sli_summary %>% as.data.frame()
+ggplot(df) +
+  geom_bar( aes(x=features_names, y=mean.mcc, fill=features_names), alpha=0.7) +
+  geom_errorbar( aes(x=features_names, ymin=mean.mcc-sd.mcc, ymax=mean.mcc+sd.mcc),
+                 width=0.4, colour="orange", alpha=0.9, linewidth=1.3) +
+  #  theme_ipsum() +
+  theme(
+    legend.position=c(0.1, 0.95),
+    legend.title = element_blank(),
+    plot.title = element_text(size=11),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+  ) +
+  xlab("")
 
