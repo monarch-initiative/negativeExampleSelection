@@ -55,12 +55,22 @@ the degree of both nodes of an edge as features.
 
 
 
-Running classification with node-based and edge-based sampling for 15 classifiers
-#################################################################################
+Running classification with node-based and edge-based sampling
+##############################################################
 
-We ran one analysis on a SLURM cluster that performed analysis with 15 different classifiers. We
-present the SLURM script we used as well as the python script in the ``scripts`` subdirectory.
-The results of analysis are used by XXX notebook below.
+We ran one analysis on a SLURM cluster that performed analysis 
+with different classifiers. We
+present the SLURM script we used as well as the python 
+script in the ``scripts`` subdirectory.
+Running these scripts will generate a folder called ``experiments`` with all the 
+results of analysis. The following notebook can be used to ingest these files 
+and calculate mean and standard deviations for the various models and parameters.
+
+* `extractingResults <https://github.com/monarch-initiative/negativeExampleSelection/blob/main/extractingResults.ipynb>`_.
+
+
+We have copied the output of the ``extractingResults`` notebook into the ``results`` folder. 
+An R script, ``plot_bar_chart.R`` was used to generate several of the figures in the manuscript.
 
 
 
