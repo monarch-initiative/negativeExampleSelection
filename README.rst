@@ -3,7 +3,13 @@ README
 ######
 
 
-This repository contains several notebooks that are designed to demonstrate the effect of different strategies of negative example selection on the measured performance of graph representation machine learning in which the nodes of a knowledge graph are embedded into a low-dimensional vector space, transformed by approaches such as the Hadamard transformation into edge representations, following which edge classification is performed by methods such as Random Forest or perceptron classification.
+This repository contains several notebooks that are designed to demonstrate 
+the effect of different strategies of negative example selection on the measured 
+performance of graph representation machine learning in which the nodes of a 
+knowledge graph are embedded into a low-dimensional vector space, transformed by 
+approaches such as the Hadamard transformation into edge representations, following 
+which edge classification is performed by methods such as Random Forest or perceptron 
+classification.
 
 Graph operations and machine learning are performed 
 using  `GRAPE <https://github.com/AnacletoLAB/grape>`_.
@@ -12,7 +18,8 @@ using  `GRAPE <https://github.com/AnacletoLAB/grape>`_.
 Setup
 ^^^^^
 
-A minimum of Python version 3.7 is required. The easiest way to run the notebooks is the set up a virtual environment as follows.
+A minimum of Python version 3.8 is required. The easiest way to run the notebooks 
+is to set up a virtual environment as follows.
 
 .. code:: bash
 
@@ -23,9 +30,10 @@ A minimum of Python version 3.7 is required. The easiest way to run the notebook
     pip install powerlaw # required for the SliNetwork notebook only
     pip install plotnine # required for some graphics
     pip install jupyter
-    python -m ipykernel install --user --name=venv
+    python -m ipykernel install --user --name="venv"
 
-Following this, start jupyter or jupyter-notebook and run any of the notebooks in this directory.
+Following this, start jupyter or jupyter-notebook and run any of the notebooks in 
+this directory.
 
 
 Biological networks
@@ -70,7 +78,7 @@ and calculate mean and standard deviations for the various models and parameters
 
 
 We have copied the output of the ``extractingResults`` notebook into the ``results`` folder. 
-An R script, ``plot_bar_chart.R`` was used to generate several of the figures in the manuscript.
+R script are provided to generate several of the figures in the manuscript.
 
 
 
