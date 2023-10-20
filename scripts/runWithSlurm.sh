@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=STRING-with-SLURM
-#SBATCH --output=StringWithSlurm.out
-#SBATCH --error=StringWithSlurm.err
+#SBATCH --job-name=RUN-NEG-SELECT
+#SBATCH --output=negSelectWithSlurm.out
+#SBATCH --error=negSelectWithSlurm.err
 
 # The number of tasks per node should always be one, as we already parallize within the pipeline.
 ####SBATCH --ntasks-per-node=6
@@ -39,3 +39,6 @@
 
 #echo "running Sli"
 #python runSli.py
+
+echo "running IDG"
+python runIDG.py

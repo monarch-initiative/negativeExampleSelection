@@ -6,7 +6,7 @@ from grape.edge_prediction import PerceptronEdgePrediction
 
 
 
-g = KGIDG(version='20230801')
+g = KGIDG(version='20230601')
 main_component = g.remove_components(top_k_components=1)
 dense_main_component = main_component.remove_dendritic_trees()
 
@@ -22,7 +22,7 @@ dense_main_component.replace_edge_type_name_from_edge_node_type_names_inplace(
 )
 
 # Set smoke test to True for testing:
-SMOKE_TEST = True
+SMOKE_TEST = False
 NUMBER_OF_HOLDOUTS = 10
 VALIDATION_UNBALANCE_RATES = (1.0, )
 TRAIN_SIZES = (0.75,)
